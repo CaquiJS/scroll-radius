@@ -1,0 +1,8 @@
+/**
+ *  CODE
+ */
+
+(function () {
+  'use strict';
+
+})();
