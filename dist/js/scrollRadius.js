@@ -18,6 +18,7 @@
 
         return this.each(function(){
             var $this = $(this),
+                $content = $this.find('> div'),
                 dragging = false,
                 events = {
                     mouseDown: function(e){
@@ -38,9 +39,9 @@
 
                         degrees = degrees < settings.minDeg ? settings.minDeg : (degrees > settings.maxDeg ? settings.maxDeg : degrees);
 
-                        setBarPosByDegree(degrees);
+                        $content.scrollTop(setBarPosByDegree(degrees));
                     },
-                    mouseUp: function(e){
+                    mouseUp: function(){
                         dragging = false;
 
                         $(document).off('mousemove', events.mouseMove);
@@ -55,16 +56,26 @@
                 var dif = settings.maxDeg - settings.minDeg,
                     val = degrees - settings.minDeg,
                     pct = val/dif,
-                    h   = $this[0].scrollHeight - $this.height();
+                    h   = $content[0].scrollHeight - $content.height();
 
                 settings.$scroll.find('.'+pluginName+'-bar-drag').css({top: point.y - 10, left: point.x - 10});
-                $this.scrollTop(h * pct);
+
+                return h * pct;
             };
 
             settings.$scroll.width(settings.radius * 2).height(settings.radius * 2);
             settings.$scroll.find('.'+pluginName+'-bar-drag').bind('mousedown', events.mouseDown);
 
-            setBarPosByDegree(settings.minDeg);
+            $content.on('scroll', function(){
+                if (!dragging) {
+                    var pct = $content.scrollTop()/($content[0].scrollHeight - $content.height());
+
+                    console.log($content.scrollTop(), $content[0].scrollHeight, pct);
+                    setBarPosByDegree((settings.maxDeg - settings.minDeg) * pct + settings.minDeg);
+                }
+            });
+
+            $content.scrollTop(setBarPosByDegree(settings.minDeg));
         });
     };
 })(document);
