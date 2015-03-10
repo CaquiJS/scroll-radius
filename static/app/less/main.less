@@ -1,6 +1,30 @@
 @charset "UTF-8";
 
-@import '_mixins.less';
-@import '_variables.less';
+@plugin-name: scroller;
 
-// @import 'components/';
+.@{plugin-name} {
+    position: relative;
+
+    .@{plugin-name}-content {
+        overflow: hidden;
+        width: 300px;
+        height: 400px;
+    }
+
+    .@{plugin-name}-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 100px;
+        background-color: rgba(51, 51, 51, 0.5);
+        border-radius: 50%;
+
+        .@{plugin-name}-bar-drag {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(51, 51, 51, 0.5);
+        }
+    }
+}
