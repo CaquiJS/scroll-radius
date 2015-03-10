@@ -2,7 +2,7 @@
  *  CODE
  */
 
-(function () {
+(function (document) {
     'use strict';
 
     var pluginName = 'scrollRadius';
@@ -48,19 +48,6 @@
                     }
                 };
 
-            var setBarPosByRadians = function(radians){
-                var point = {x: settings.radius + (settings.radius * Math.cos(radians)), y: settings.radius + (settings.radius * Math.sin(radians))},
-                    degrees = 180 + ((radians * 180) / Math.PI) % 360;
-
-                var dif = settings.maxDeg - settings.minDeg,
-                    val = degrees - settings.minDeg,
-                    pct = val/dif,
-                    h   = $this[0].scrollHeight - $this.height();
-
-                settings.$scroll.find('.'+pluginName+'-bar-drag').css({top: point.y - 10, left: point.x - 10});
-                $this.scrollTop(h * pct);
-            };
-
             var setBarPosByDegree = function(degrees){
                 var radians = (degrees - 180) * 0.0174532925,
                     point = {x: settings.radius + (settings.radius * Math.cos(radians)), y: settings.radius + (settings.radius * Math.sin(radians))};
@@ -80,6 +67,4 @@
             setBarPosByDegree(settings.minDeg);
         });
     };
-
-    $('.'+pluginName+'-content')[pluginName]({$scroll: $('.'+pluginName+'-bar')});
-})();
+})(document);
