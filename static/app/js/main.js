@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    var pluginName = 'scroller';
+    var pluginName = 'scrollRadius';
 
     $.fn[pluginName] = function(params){
         var defaults = {
